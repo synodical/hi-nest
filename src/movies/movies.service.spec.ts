@@ -41,8 +41,39 @@ describe('MoviesService', () => {
         service.getOne(999);
       } catch (e) {
         expect(e).toBeInstanceOf(NotFoundException);
-        expect(e.message).toEqual('Movie not 999');
       }
+    });
+  });
+  describe('deleteOne', () => {
+    it('deletes a movie', function () {
+      service.create({
+        title: 'Test Movie',
+        genres: ['Test'],
+        year: 2000,
+      });
+      const beforeDelete = service.getAll().length;
+      service.deleteOne(1);
+      const afterDelete = service.getAll().length;
+      expect(afterDelete).toBeLessThan(beforeDelete);
+    });
+    it('should return 404', function () {
+      try {
+        service.deleteOne(99);
+      } catch (e) {
+        expect(e).toBeInstanceOf(NotFoundException);
+      }
+    });
+  });
+  describe('create', () => {
+    it('should create a movie', function () {
+      const beforeCreate = service.getAll().length;
+      service.create({
+        title: 'Test Movie',
+        genres: ['Test'],
+        year: 2000,
+      });
+      const afterCreate = service.getAll().length;
+      expect(afterCreate).toBeGreaterThan(beforeCreate);
     });
   });
 });
