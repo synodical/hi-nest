@@ -7,12 +7,15 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 export class MoviesService {
   // 쿼리 처리
   private movies: Movie[] = [];
+
   getAll(): Movie[] {
     // controller의 함수와 이름이 같아도 ㄱㅊ
     return this.movies;
   }
+
   getOne(id: number): Movie {
-    const movie = this.movies.find((movie) => movie.id === +id);
+    console.log(typeof id);
+    const movie = this.movies.find((movie) => movie.id === id);
     if (!movie) {
       throw new NotFoundException(`Movie with ID ${id} Not Found`);
     }
@@ -30,6 +33,7 @@ export class MoviesService {
       ...movieData,
     });
   }
+
   update(id: number, updateData: UpdateMovieDto) {
     const movie = this.getOne(id);
     this.deleteOne(id);

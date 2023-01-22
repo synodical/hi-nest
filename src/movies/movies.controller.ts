@@ -18,6 +18,7 @@ export class MoviesController {
   // express와 달리, nestjs에서는 수동으로 import하지 않는다
   // 그 대신, constructor가 service라는 클래스를 가진다.
   constructor(private readonly moviesService: MoviesService) {}
+
   @Get()
   getAll(): Movie[] {
     return this.moviesService.getAll();
@@ -30,7 +31,6 @@ export class MoviesController {
 
   @Get(':id')
   getOne(@Param('id') movieId: number): Movie {
-    console.log(typeof movieId);
     return this.moviesService.getOne(movieId);
   }
 
